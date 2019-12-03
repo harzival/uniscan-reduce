@@ -196,11 +196,10 @@ def main():
         ]:
             for line in obj_path.open("r"):
                 if line.startswith("mtllib "):
-                    texture_path = lod_dir / Path(
+                    texture_path = lod_dir / str(Path(
                         line.replace("mtllib ", "")
                         .replace(".mtl", ".jpg")
-                        .rstrip("\n")
-                        .replace('\\', '/')
+                        .rstrip("\n"))
                     )
                     input_mesh_list.append(Mesh(obj_path, texture_path))
                     break
