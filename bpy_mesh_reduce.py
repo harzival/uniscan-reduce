@@ -200,7 +200,7 @@ def main():
                         line.replace("mtllib ", "")
                         .replace(".mtl", ".jpg")
                         .rstrip("\n")
-                        .replace(r"\\", "/"))
+                        .replace("\\\\", "/"))
                     )
                     input_mesh_list.append(Mesh(obj_path, texture_path))
                     break
