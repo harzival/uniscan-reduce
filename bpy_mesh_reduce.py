@@ -56,6 +56,9 @@ add_faces_percentage = args.add_faces_percentage
 reduction_percentage = args.reduction_percentage
 max_error = args.max_error
 
+print(str(input_dir))
+print(str(output_dir))
+
 
 def import_obj(obj_path):
     object_list = [o for o in bpy.data.objects]
@@ -199,8 +202,8 @@ def main():
                     texture_path = lod_dir / str(Path(
                         line.replace("mtllib ", "")
                         .replace(".mtl", ".jpg")
+                        .replace("/", ""))
                         .rstrip("\\n")
-                        .replace("/", "\\\\"))
                     )
                     input_mesh_list.append(Mesh(obj_path, texture_path))
                     break
