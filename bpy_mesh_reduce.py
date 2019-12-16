@@ -203,15 +203,8 @@ def main():
                         line.replace("mtllib ", "")
                         .replace("\\", "/")
                         .replace(".mtl", ".jpg")
-                        .rstrip("\n")
-                    )
-                    texture_path = (
-                        lod_dir
-                        / local_texture_path.parent.name
-                        / local_texture_path.name
-                    )
-                    print("texture path: " + str(local_texture_path.parent))
-                    print("(" + str(texture_path) + ")")
+                        .rstrip("\n"))
+                    texture_path = lod_dir / str(local_texture_path)
                     input_mesh_list.append(Mesh(obj_path, texture_path))
                     break
     for input_mesh in input_mesh_list:
