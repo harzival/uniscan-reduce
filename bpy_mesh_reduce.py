@@ -201,6 +201,7 @@ def main():
                 if line.startswith("mtllib "):
                     local_texture_path = Path(
                         line.replace("mtllib ", "")
+                        .replace("\\", "/")
                         .replace(".mtl", ".jpg")
                         .rstrip("\n")
                     )
