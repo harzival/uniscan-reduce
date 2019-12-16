@@ -7,7 +7,7 @@ import argparse
 
 args = None
 if "--" in sys.argv:
-    argv = sys.argv[sys.argv.index("--") + 1:]
+    argv = sys.argv[sys.argv.index("--") + 1 :]
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "input",
@@ -199,11 +199,15 @@ def main():
         ]:
             for line in obj_path.open("r"):
                 if line.startswith("mtllib "):
-                    texture_path = lod_dir / str(Path(
+                    local_texture_path = Path(
                         line.replace("mtllib ", "")
                         .replace(".mtl", ".jpg")
-                        .replace("\\", "/")
-                        .rstrip("\\n"))
+                        .rstrip("\n")
+                    )
+                    texture_path = (
+                        lod_dir
+                        / local_texture_path.parent.name
+                        / local_texture_path.name
                     )
                     input_mesh_list.append(Mesh(obj_path, texture_path))
                     break
