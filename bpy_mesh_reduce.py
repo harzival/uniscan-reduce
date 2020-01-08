@@ -191,9 +191,13 @@ def main():
         def __init__(self, obj_path, texture_path):
             self.obj_path = obj_path
             self.texture_path = texture_path
-
+    metadata_path_list = []
     input_mesh_list = []
     for lod_dir in [d for d in input_dir.iterdir() if d.is_dir()]:
+        for metadata_path in [
+            p for p in lod_dir.iterdir() if p.name == "metadata.json"
+        ]:
+            metadata_path_list.append(metadata_path)
         for obj_path in [
             p for p in lod_dir.iterdir() if p.name.endswith(".obj")
         ]:
@@ -263,11 +267,21 @@ def main():
 
         set_active_object(mesh)
         mesh.select = True
-        deselect_all()
         bpy.ops.object.delete()
         set_active_object(reduced_mesh)
         reduced_mesh.select = True
         bpy.ops.object.delete()
+        deselect_all()
+    
+    # Export the metadata.json files contained in each LOD directory into the output LOD dirs.
+    for metadata_path in metadata_path:
+        export_path = (
+            output_dir 
+            / metadata_path.parent.name 
+            / metadata_path.name)
+        export_path.touch()
+        export_path.write_bytes(metadata_path.read_bytes())
+        print("UNISCAN: exported metadata.json file for " + metadata_path.parent.name)
 
 
 main()
